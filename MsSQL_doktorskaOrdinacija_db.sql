@@ -1,44 +1,52 @@
---create database doktorskaOrdinacija;
+use master;
+go
+drop database doktorskaOrdinacija;
+go
+create database doktorskaOrdinacija;
+go
+alter database doktorskaOrdinacija collate Croatian_CI_AS; 
+go
+use  doktorskaOrdinacija;
 
-use doktorskaOrdinacija;
 
---create table pacijenti(
---id int, 
---ime varchar(50),
---prezime varchar(50),
---oib char (11),
---spol char (1),
---brojMedOsiguranja varchar(50) 
---);
+create table pacijenti(
+id int not null primary key identity (1,1), 
+ime varchar(50) not null,
+prezime varchar(50) not null,
+oib char (11) not null,
+spol char (1) not null,
+brojMedOsiguranja varchar(50) not null 
+);
 
---create table doktor (
---id int, 
---ime varchar(50),
---prezime varchar(50),
---specijalizacija varchar(50)
---);
+create table doktor (
+id int not null primary key identity(1,1), 
+ime varchar(50) not null,
+prezime varchar(50) not null,
+oib char(11) not null, 
+specijalizacija varchar(50) not null
+);
 
---create table medSestre(
---id int, 
---ime varchar(50),
---prezime varchar(50),
---oib char(11)
---);
+create table medSestre(
+id int not null primary key identity(1,1), 
+ime varchar(50) not null,
+prezime varchar(50) not null,
+oib char(11) not null,
+tim int
+);
 
---create table timovi(
---medSestra varchar(50),
---pacijent varchar(50)
---);
+create table lijecenje(
+tim int,
+pacijent int,
+doktor int
+);
 
---create table lijecenje(
---id int, 
---brojMedOsiguranja varchar (50), 
---dijagnoza varchar(100),
---doktor varchar(50),
---tim varchar(50)
+create table timovi (
+timID int not null primary key, 
+medSestra int
+);
 
---);
 
---drop table timovi;
-
---alter table medSestre add tim varchar(50);
+alter table timovi add foreign key (medSestra) references medSestre(id);
+alter table lijecenje add foreign key (tim) references timovi(timID);
+alter table lijecenje add foreign key (pacijent) references pacijenti(id);
+alter table lijecenje add foreign key (doktor) references doktor(id); 
