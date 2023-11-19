@@ -1,27 +1,41 @@
---use frizerskisalon;
+use master;
+go
+drop database frizerskisalon;
+go
+create database frizerskisalon;
+go
+alter database frizerskisalon collate Croatian_CI_AS;
+go
+use frizerskisalon;
 
---create table posjeta (
---korisnik varchar(50),
---termin datetime, 
---djelatnik varchar(50),
---usluga varchar(50)
---);
+create table posjete (
+id int not null primary key identity(1,1),
+korisnik int,
+termin datetime not null, 
+djelatnik int not null,
+usluga int
+);
 
---create table djelatnici (
---ID int, 
---ime varchar(50),
---prezime varchar(50),
+create table djelatnici (
+ID int not null primary key identity(1,1), 
+ime varchar(50) not null,
+prezime varchar(50) not null,
 
---);
+);
 
---create table korisnici (
---brojmobitela varchar(50),
---spol char(1), 
---tipkose varchar(50)
---); 
+create table korisnici (
+id int not null primary key identity(1,1),
+brojmobitela varchar(50) not null,
+spol char(1) not null, 
+tipkose varchar(50) not null
+); 
 
---create table usluga (
---ID int, 
---naziv varchar(50),
---cijena decimal (10,2)
---);
+create table usluge (
+ID int not null primary key identity(1,1), 
+naziv varchar(50) not null,
+cijena decimal (10,2) not null
+);
+
+alter table posjete add foreign key (korisnik) references korisnici(id); 
+alter table posjete add foreign key (djelatnik) references djelatnici(id);
+alter table posjete add foreign key (usluga) references usluge(id);
