@@ -10,7 +10,6 @@ create table korisnici(
 id int not null primary key identity(1,1),
 naziv varchar(50),
 sifra varchar(50),
-pretinac int,
 slika int,
 opis int,
 rezervacije int
@@ -30,7 +29,12 @@ datumObjave datetime,
 datumDogadaja datetime,
 naslovnaFotografija varchar(200),
 galerijaFotografija int,
-komentari int
+komentariObjave int
+);
+
+create table rezervacije(
+korisnik int,
+glazbeniDogadaj int
 );
 
 create table fotografije (
@@ -38,8 +42,33 @@ id int not null primary key identity(1,1),
 lokacijaFotografije varchar(200)
 );
 create table galerije(
-galerija varchar(100),
+id int not null primary key identity(1,1),
+naziv varchar(100)
+);
+create table galerijeFotografija(
+galerija int,
 fotografija int
 );
 
+create table komentari(
+id int not null primary key identity(1,1),
+korisnik int,
+nastao datetime,
+tekst varchar(500)
+);
 
+create table komentarigrupa(
+komentar int, 
+glazbeniDogadaj int
+);
+
+alter table galerijeFotografija add foreign key (galerija) references galerije(id);
+alter table galerijeFotografija add foreign key (fotografija) references fotografije(id);
+alter table inbox add foreign key (korisnikPosiljatelj) references korisnici(id);
+alter table inbox add foreign key (korisnikPrimatelj) references korisnici(id);
+alter table korisnici add foreign key (slika) references fotografije(id); 
+alter table komentari add foreign key (korisnik) references korisnici (id);
+alter table komentarigrupa add foreign key (komentar) references komentari(id);
+alter table komentarigrupa add foreign key (glazbenidogadaj) references glazbeniDogadaji(id);
+alter table rezervacije add foreign key (korisnik) references korisnici(id);
+alter table rezervacije add foreign key (glazbenidogadaj) references glazbenidogadaji(id); 
