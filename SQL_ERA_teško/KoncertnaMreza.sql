@@ -8,7 +8,7 @@ use koncertnamreza;
 
 create table korisnici(
 id int not null primary key identity(1,1),
-slika int,
+fotografija int,
 naziv varchar(50),
 sifra varchar(50),
 opis int,
@@ -19,6 +19,8 @@ create table inbox(
 korisnikPosiljatelj int not null,
 poruka varchar(500) not null,
 korisnikPrimatelj int not null,
+datumSlanja datetime not null,
+jeVideno bit not null 
 );
 
 create table glazbeniDogadaji(
@@ -67,7 +69,7 @@ alter table galerijeFotografija add foreign key (galerija) references galerije(i
 alter table galerijeFotografija add foreign key (fotografija) references fotografije(id);
 alter table inbox add foreign key (korisnikPosiljatelj) references korisnici(id);
 alter table inbox add foreign key (korisnikPrimatelj) references korisnici(id);
-alter table korisnici add foreign key (slika) references fotografije(id); 
+alter table korisnici add foreign key (fotografija) references fotografije(id); 
 alter table komentari add foreign key (korisnik) references korisnici (id);
 alter table komentarigrupa add foreign key (komentar) references komentari(id);
 alter table komentarigrupa add foreign key (glazbenidogadaj) references glazbeniDogadaji(id);
