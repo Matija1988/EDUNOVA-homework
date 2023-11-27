@@ -24,7 +24,6 @@ komentariGrupa int
 );
 
 create table galerijeFotografija(
-id int not null primary key identity(1,1),
 galerija int not null,
 fotografija int not null
 );
