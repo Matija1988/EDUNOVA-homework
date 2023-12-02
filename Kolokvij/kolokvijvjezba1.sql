@@ -126,4 +126,7 @@ inner join sestra d on c.sestra = d.sifra
 inner join sestra_svekar e on e.sestra = d.sifra
 inner join svekar f on e.svekar = f.sifra
 where a.hlace like 'B%' and d.haljina like '%b%a%'
+order by 2 desc 
 ;
+
+
